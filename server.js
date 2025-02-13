@@ -1,56 +1,46 @@
 const express = require('express')
-
 const app = express();
+const collectibles = [
+    { name: 'shiny ball', price: 5.95 },
+    { name: 'autographed picture of a dog', price: 10 },
+    { name: 'vintage 1970s yogurt SOLD AS-IS', price: 0.99 }
+  ];
 
 
 
 // 1) http://localhost:3000/greetings/:Sage
-app.get('/greetings/name', (req,res) =>{
-    const firstName = req.params.name
+app.get('/greetings/:username', (req,res) => {
+    const firstName = req.params.username
     res.send(`<h1>Hello there, ${firstName}!</h1>`)
-    console.log(firstName)
 });
 
 
 
 // 2) route w/ url '/roll/:number', if param equal number, generate rando # between 0 and user input
-app.get('/roll/number', (req,res) => {
+app.get('/roll/:number', (req,res) => {
     isANumber = req.params.number
-    randoGeneratedNumb = Math.random() * isANumber
 
-    if (typeof isANumber === 'number') {
-        res.send(`You rolled a ${randoGeneratedNumb}.`)
+    if (isNaN(isANumber)) {
+          res.send('You must specify a number.')
+    } else {
+        let randomNumber = Math.ceil(Math.random() * isANumber);
+        res.send(`You rolled a ${randomNumber}`)
     }
-    else{
-        res.send('You must specify a number.')
-    }
-})
+}  )
 
+    
 
-
-// 3) route w/ url localhost3000/collectibles?name=Sage&price=32 ***** unfinished *****
+// 3) route w/ url localhost3000/collectibles/:index--- if index is in array {....}, if not {....}
 app.get('/collectibles/:index', (req,res) =>{
 
-    const collectibles = [
-        { name: 'shiny ball', price: 5.95 },
-        { name: 'autographed picture of a dog', price: 10 },
-        { name: 'vintage 1970s yogurt SOLD AS-IS', price: 0.99 }
-      ];
-    
+    res.send(req.params.index);
 
-    const name = req.query.name;
-    const age = req.query.age;
-if ( req.params.index === /*not sure what to put here*/ x ) {
-    req.send(`So, you want the ${name}? For ${price}, it can be yours!`)
-}
-else{
+if ( !collectibles[req.params.index]) {
     req.send('This item is not in stock. Check back soon!')
 }
-
-
-
-    res.send(`<h1>Hello there, ${firstName}!</h1>`)
-    
+else{
+ req.send(`So, you want the ${collectibles.name}? For ${collectibles.price}, it can be yours!`)   
+}
 });
 
 
