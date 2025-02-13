@@ -5,15 +5,16 @@ const app = express();
 
 
 // 1) http://localhost:3000/greetings/:Sage
-app.get('/greetings/:name', (req,res) =>{
+app.get('/greetings/name', (req,res) =>{
     const firstName = req.params.name
     res.send(`<h1>Hello there, ${firstName}!</h1>`)
-    
+    console.log(firstName)
 });
 
 
+
 // 2) route w/ url '/roll/:number', if param equal number, generate rando # between 0 and user input
-app.get('/roll/:number'), (req,res) => {
+app.get('/roll/number', (req,res) => {
     isANumber = req.params.number
     randoGeneratedNumb = Math.random() * isANumber
 
@@ -23,7 +24,7 @@ app.get('/roll/:number'), (req,res) => {
     else{
         res.send('You must specify a number.')
     }
-}
+})
 
 
 
